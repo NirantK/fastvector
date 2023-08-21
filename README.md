@@ -1,43 +1,41 @@
-# FastVector Library
+# FastEmbed Library
 
-FastVector is a Python library that provides convenient methods for indexing and searching text documents using Qdrant, a high-dimensional vector indexing and search system.
+FastEmbed is light, built for retrieval and fast:
 
-## Features
+0. Light
+    - Quantized model weights
+    - ONNX Runtime for inference
+    - No hidden dependencies on PyTorch or TensorFlow via Huggingface Transformers
 
-- Batch document insertion with automatic embedding using SentenceTransformers. With support for OpenAI and custom embeddings.
-- Efficient batch searching with support for filtering by metadata.
-- Automatic generation of unique IDs for documents.
-- Convenient alias methods for adding documents and performing queries.
+1. Accuracy/Recall
+    - Better than OpenAI Ada-002
+    - Default is Flag Embedding, which is top of the [MTEB](https://huggingface.co/spaces/mteb/leaderboard) leaderboard
+
+2. Fast
+    - About 2x faster than Huggingface (PyTorch) transformers on single queries
+    - Lot faster for batches!
+    - ONNX Runtime allows you to use dedicated runtimes for even higher throughput and lower latency 
 
 ## Installation
 
-To install the FastVector library, we install Qdrant client as well with pip:
+To install the FastEmbed library, we recommend using Poetry, alternatively -- pip works: 
 
 ```bash
-pip install fastvector qdrant-client
+pip install fastembed
 ```
 
 ## Usage
 
-Here's a simple usage example, which works as is:
-
 ```python
-from qdrant_client import QdrantClient
+from fastembed.embedding import DefaultEmbedding
 
-# Initialize the client
-client = QdrantClient(":memory:")  # or QdrantClient(path="path/to/db")
-
-# Prepare your documents, metadata, and IDs
-docs = ["Qdrant has Langchain integrations", "Qdrant also has Llama Index integrations"]
-metadatas = [
-    {"source": "Langchain-docs"},
-    {"source": "Linkedin-docs"},
+documents: List[str] = [
+    "Hello, World!",
+    "This is an example document.",
+    "fastembed is supported by and maintained by Qdrant." * 128,
 ]
-ids = [42, 2]
-
-# Use the new add method
-client.add(collection_name="demo_collection", docs={"documents": docs, "metadatas": metadatas, "ids": ids})
-
-search_result = client.query(collection_name="demo_collection", query_texts=["This is a query document"])
-print(search_result)
+# Initialize the DefaultEmbedding class with the desired parameters
+# model_name="BAAI/bge-small-en"
+embedding_model = DeafultEmbedding() 
+embeddings: List[np.ndarray] = list(embedding_model.encode(documents))
 ```

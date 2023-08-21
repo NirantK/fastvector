@@ -1,25 +1,30 @@
 [tool.poetry]
-name = "fastvector"
-version = "0.0.1"
-description = "Fast embedding alternative to Sentence transformers"
+name = "fastembed"
+version = "0.0.2"
+description = "Fast, State of the Art Quantized Embedding Models"
 authors = ["NirantK <nirant.bits@gmail.com>"]
 license = "Apache License"
 readme = "README.md"
-packages = [{include = "fastvector"}]
-homepage = "https://github.com/qdrant/qdrant-client"
-repository = "https://github.com/qdrant/qdrant-client"
-keywords = ["vector", "embedding", "neural", "search", "qdrant"]
+packages = [{include = "fastembed"}]
+homepage = "https://github.com/qdrant/fastembed"
+repository = "https://github.com/qdrant/fastembed"
+keywords = ["vector", "embedding", "neural", "search", "qdrant", "sentence-transformers"]
 
 [tool.poetry.dependencies]
 python = ">=3.8.0,<3.12"
 onnxruntime = "^1.15.1"
-sentence-transformers = "^2.2.2"
+tqdm = "^4.65.0"
+requests = "^2.31.0"
+tokenizers = "^0.13.3"
 
 [tool.poetry.dev-dependencies]
 ruff = "^0.0.277"
 isort = "^5.12.0"
 black = "^23.7.0"
-pre-commit = "^3.3.3"
+optimum = "^1.11.1"
+onnx = "^1.11.0"
+notebook = ">=7.0.2"
+mkdocs-material = "^9.1.21"
 
 [tool.poetry.dependencies.onnxruntime-silicon]
 version = "^1.15.0"
